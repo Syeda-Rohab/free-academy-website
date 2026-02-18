@@ -1,0 +1,582 @@
+============================================================
+   JAVASCRIPT ADVANCED COURSE - COMPLETE TRAINING
+============================================================
+
+
+============================================================
+CHAPTER 1: CLOSURES & SCOPE
+============================================================
+
+1.1 Scope Kya Hai?
+    Scope variable ki accessibility define karta hai.
+
+1.2 Global Scope:
+    Global variable: I am global
+    Kahin se bhi access ho sakta hai
+
+1.3 Function Scope:
+    Function variable: I am inside function
+    Sirf function ke andar accessible hai
+
+1.4 Block Scope (let/const):
+    Block variable: I am in block
+    Block constant: I am constant
+    Sirf block { } ke andar accessible hai
+
+1.5 Lexical Scoping:
+    Inner accessing outer: Outer variable
+    Inner function outer ke variables access kar sakta hai
+
+1.6 Closures:
+    Closure example:
+    counter() → 1
+    counter() → 2
+    counter() → 3
+    Count variable ab bhi exist karta hai!
+
+1.7 Closure Practical Use:
+    double(5) → 10
+    triple(5) → 15
+
+1.8 IIFE (Immediately Invoked Function Expression):
+    IIFE executed: I am private
+    Turant execute hone wala function
+
+✓ Closures & Scope Complete!
+
+============================================================
+CHAPTER 2: ASYNC JAVASCRIPT (Promises, async/await)
+============================================================
+
+2.1 Async JavaScript Kyun Zaroori Hai?
+    - API calls ke liye
+    - File operations ke liye
+    - Database operations ke liye
+    - User interface freeze hone se bachane ke liye
+
+2.2 Callback Pattern (Purana tareeqa):
+
+2.3 Promises (Naya tareeqa):
+
+2.4 Promise States:
+    - Pending: Initial state
+    - Fulfilled: Success
+    - Rejected: Failure
+
+2.5 Promise Chaining:
+
+2.6 Promise.all (Multiple promises):
+
+2.7 async/await (Sabse clean tareeqa):
+    async/await: Fetching data...
+
+2.8 Error Handling with async/await:
+    Trying to fetch...
+
+2.9 Real-world Example (API Call):
+    Fetching user 123 ...
+
+✓ Async JavaScript Complete!
+
+============================================================
+CHAPTER 3: ES6+ FEATURES
+============================================================
+
+3.1 let/const (Block Scoping):
+    let: Changed!
+    const: I cannot change
+
+3.2 Arrow Functions:
+    add(5, 3) → 8
+    greet('Alice') → Hello, Alice!
+    square(4) → 16
+
+3.3 Template Literals:
+    Template: Hello, my name is Alice and I'm 25 years old.
+
+3.4 Destructuring:
+
+    Array Destructuring:
+    [first, second, third] = colors
+    first: red , second: green , third: blue
+
+    Object Destructuring:
+    const { name, age } = user
+    name: Bob , age: 30
+
+3.5 Spread Operator (...):
+    const nums2 = [...nums1, 4, 5, 6]
+    Result: [ 1, 2, 3, 4, 5, 6 ]
+    const obj2 = { ...obj1, c: 3 }
+    Result: { a: 1, b: 2, c: 3 }
+
+3.6 Rest Parameters:
+    function sum(...numbers) { ... }
+    sum(1, 2, 3, 4, 5) → 15
+
+3.7 Default Parameters:
+    function welcome(person = "Guest", ...)
+    welcome() → Hello, Guest!
+    welcome('Charlie') → Hello, Charlie!
+
+3.8 Optional Chaining (?.):
+    nestedObj?.user?.profile?.name → Test
+    nestedObj?.missing?.property → undefined
+
+3.9 Nullish Coalescing (??):
+    null ?? 'default' → default
+    0 ?? 'default' → 0
+    '' ?? 'default' → 
+
+3.10 Array Methods (ES6):
+    numbers: [ 1, 2, 3, 4, 5 ]
+    map(x => x * 2) → [ 2, 4, 6, 8, 10 ]
+    filter(x => x > 2) → [ 3, 4, 5 ]
+    find(x => x > 3) → 4
+    reduce((a, b) => a + b, 0) → 15
+
+3.11 Object Methods (ES6):
+    personObj.greet() → Hello, I'm John
+
+3.12 Classes (ES6):
+    Animal makes a sound
+
+✓ ES6+ Features Complete!
+
+============================================================
+CHAPTER 4: PROTOTYPES & CLASSES
+============================================================
+
+4.1 Prototypes Kya Hain?
+    Har JavaScript object ka ek prototype hota hai
+
+4.2 Constructor Function:
+    function Person(name, age) { ... }
+    person1.greet() → Hello, I'm Alice
+
+4.3 Prototype Chain:
+    person1 → Person.prototype → Object.prototype → null
+    person1.toString() → [object Object]
+
+4.4 ES6 Classes:
+    class PersonClass { ... }
+    person2.greet() → Hello, I'm Bob
+
+4.5 Static Methods:
+    PersonClass.create('Charlie', 35)
+    person3.greet() → Hello, I'm Charlie
+
+4.6 Inheritance with Prototypes:
+    Buddy barks
+
+4.7 Inheritance with Classes:
+    Max barks
+    Max fetches the ball
+
+4.8 super Keyword:
+    Whiskers meows (orange)
+
+4.9 Getters & Setters:
+    rect.area → 50
+
+✓ Prototypes & Classes Complete!
+
+============================================================
+CHAPTER 5: HIGHER-ORDER FUNCTIONS
+============================================================
+
+5.1 Higher-Order Function Kya Hai?
+    Jo function doosre function ko:
+    - Parameter ke tor pe le
+    - Ya return kare
+
+5.2 Function as Parameter:
+    processUser('Alice', sayHello) → Hello, Alice!
+    processUser('Alice', sayGoodbye) → Goodbye, Alice!
+
+5.3 Function as Return Value:
+    const helloGreeter = createGreeter('Hello')
+    helloGreeter('Alice') → Hello, Alice!
+    hiGreeter('Bob') → Hi, Bob!
+
+5.5 Array Higher-Order Functions:
+    nums: [ 1, 2, 3, 4, 5 ]
+
+    map - Transform:
+    nums.map(n => n * 2) → [ 2, 4, 6, 8, 10 ]
+
+    filter - Filter:
+    nums.filter(n => n % 2 === 0) → [ 2, 4 ]
+
+    reduce - Reduce to single value:
+    nums.reduce((acc, n) => acc + n, 0) → 15
+
+    find - Find first match:
+    nums.find(n => n > 3) → 4
+
+    some - Check if any match:
+    nums.some(n => n % 2 === 0) → true
+
+    every - Check if all match:
+    nums.every(n => n > 0) → true
+
+    sort - Sort array:
+    [3,1,4,1,5,9,2,6].sort((a,b) => a-b) → [
+  1, 1, 2, 3,
+  4, 5, 6, 9
+]
+
+5.6 Function Composition:
+    compose(addTen, doubleFunc)(5) → 20
+
+5.7 Currying:
+    Currying: Convert function to chain of single-arg functions
+    curriedAdd(1)(2)(3) → 6
+    Step 1: curriedAdd(1) returns function
+    Step 2: (1)(2) returns function
+    Step 3: (1)(2)(3) returns 6
+
+✓ Higher-Order Functions Complete!
+
+============================================================
+CHAPTER 6: ERROR HANDLING
+============================================================
+
+6.1 try/catch/finally:
+    Trying...
+    Caught error: Something went wrong!
+    Finally: Always runs
+
+6.2 Multiple Catch Blocks:
+    TypeError caught: Value is null
+
+6.3 Custom Errors:
+    CustomError: This is a custom error
+
+6.4 Error Types:
+    - SyntaxError: Invalid syntax
+    - ReferenceError: Undefined variable
+    - TypeError: Wrong type usage
+    - RangeError: Invalid range
+    - URIError: Invalid URI
+
+6.5 Validation Example:
+    Email validation: Passed
+
+6.6 Async Error Handling:
+    Fetching data...
+
+6.7 Best Practices:
+    ✓ Always catch errors in async code
+    ✓ Use specific error types
+    ✓ Log errors for debugging
+    ✓ Show user-friendly messages
+    ✓ Clean up resources in finally
+
+✓ Error Handling Complete!
+
+============================================================
+CHAPTER 7: MODULES (import/export)
+============================================================
+
+7.1 Modules Kyun Zaroori Hain?
+    - Code organization
+    - Reusability
+    - Maintainability
+    - Namespace management
+
+7.2 CommonJS (Node.js):
+    // math.js
+    const PI = 3.14159;
+    function add(a, b) { return a + b; }
+    module.exports = { PI, add };
+
+    // main.js
+    const math = require('./math');
+    console.log(math.PI);
+
+7.3 ES6 Modules:
+    // Named Export
+    export const PI = 3.14159;
+    export function add(a, b) { return a + b; }
+
+    // Default Export
+    export default class Calculator { ... }
+
+    // Import
+    import Calculator, { PI, add } from './math.js';
+
+7.4 Module Pattern (IIFE):
+    MathModule.add(5, 3) → 8
+    MathModule.getPI() → 3.14159
+
+7.5 Export Types:
+
+    Named Exports:
+    export const name = 'value';
+    export function func() { ... }
+    export class Class { ... }
+    import { name, func, Class } from './module';
+
+    Default Export:
+    export default function() { ... }
+    import anyName from './module';
+
+    Re-export:
+    export { name } from './other';
+    export * from './other';
+
+7.6 Dynamic Imports:
+    // Lazy loading
+    button.addEventListener('click', async () => {
+      const module = await import('./module.js');
+      module.function();
+    });
+
+✓ Modules Complete!
+
+============================================================
+CHAPTER 8: JSON & LOCALSTORAGE
+============================================================
+
+8.1 JSON Kya Hai?
+    JavaScript Object Notation
+    Data exchange ka standard format
+
+8.2 JSON Create karna:
+    const user = { name: 'Alice', age: 25, ... };
+
+8.3 JSON.stringify (Object to JSON):
+    JSON.stringify(user)
+    Result: {"name":"Alice","age":25,"city":"New York","hobbies":["reading","coding"]}
+
+8.4 JSON.parse (JSON to Object):
+    JSON.parse(jsonString)
+    Result: {
+  name: 'Alice',
+  age: 25,
+  city: 'New York',
+  hobbies: [ 'reading', 'coding' ]
+}
+    parsedObj.name → Alice
+
+8.5 JSON with Arrays:
+    Array to JSON: [{"name":"Alice","age":25},{"name":"Bob","age":30}]
+    JSON to Array: [ { name: 'Alice', age: 25 }, { name: 'Bob', age: 30 } ]
+
+8.6 LocalStorage Kya Hai?
+    Browser mein data store karne ki jagah
+    5-10MB storage
+    Data persist rehta hai
+
+8.7 LocalStorage Methods:
+    localStorage.setItem('key', 'value')
+    localStorage.getItem('key')
+    localStorage.removeItem('key')
+    localStorage.clear()
+    localStorage.length
+    localStorage.key(index)
+
+8.8 LocalStorage Example (Node.js simulation):
+    Storing data:
+    setItem('username', 'Alice')
+    setItem('email', 'alice@example.com')
+    setItem('age', '25')
+
+    Retrieving data:
+    getItem('username') → Alice
+    getItem('email') → alice@example.com
+
+8.9 Storing Objects in LocalStorage:
+    Storing object:
+    setItem('user', '{"name":"Bob","age":30}')
+
+    Retrieving object:
+    getItem('user') → {"name":"Bob","age":30}
+    getItem('user') → {"name":"Bob","age":30}
+    Parsed: { name: 'Bob', age: 30 }
+
+8.10 LocalStorage vs SessionStorage vs Cookies:
+    ┌─────────────┬──────────┬─────────────┬──────────┐
+    │ Feature     │ Local    │ Session     │ Cookies  │
+    ├─────────────┼──────────┼─────────────┼──────────┤
+    │ Capacity    │ 5-10MB   │ 5MB         │ 4KB      │
+    │ Expiry      │ Never    │ Tab close   │ Set time │
+    │ Server Send │ No       │ No          │ Yes      │
+    └─────────────┴──────────┴─────────────┴──────────┘
+
+8.11 Practical Use Cases:
+    - User preferences save karna
+    - Shopping cart store karna
+    - Form data temporarily save karna
+    - Dark/light theme yaad rakhna
+    - Login token store karna
+
+8.12 Browser Example:
+    // Save theme preference
+    localStorage.setItem('theme', 'dark');
+
+    // Load theme preference
+    const theme = localStorage.getItem('theme');
+    if (theme === 'dark') {
+      document.body.classList.add('dark-theme');
+    }
+
+✓ JSON & LocalStorage Complete!
+
+============================================================
+CHAPTER 9: ADVANCED PROJECT - E-COMMERCE APP
+============================================================
+
+9.1 Welcome to TechStore!
+
+Step 1: Adding Products
+----------------------
+    ✓ Product added: Gaming Laptop - $1299.99 (Stock: 10)
+    ✓ Product added: Wireless Mouse - $49.99 (Stock: 50)
+    ✓ Product added: Mechanical Keyboard - $149.99 (Stock: 30)
+    ✓ Product added: Noise-Canceling Headphones - $299.99 (Stock: 20)
+    ✓ Product added: 4K Monitor - $599.99 (Stock: 15)
+
+    === TechStore - PRODUCTS ===
+    [1] Gaming Laptop - $1299.99 (Electronics) - In Stock (10)
+    [2] Wireless Mouse - $49.99 (Accessories) - In Stock (50)
+    [3] Mechanical Keyboard - $149.99 (Accessories) - In Stock (30)
+    [4] Noise-Canceling Headphones - $299.99 (Audio) - In Stock (20)
+    [5] 4K Monitor - $599.99 (Electronics) - In Stock (15)
+
+Step 2: Customer Shopping Session
+---------------------------------
+    ✓ Added 1x Gaming Laptop to cart
+    ✓ Added 2x Wireless Mouse to cart
+    ✓ Added 1x Mechanical Keyboard to cart
+    ✓ Added 1x Noise-Canceling Headphones to cart
+
+    === SHOPPING CART ===
+    Gaming Laptop x1
+      $1299.99 each = $1299.99
+    Wireless Mouse x2
+      $49.99 each = $99.98
+    Mechanical Keyboard x1
+      $149.99 each = $149.99
+    Noise-Canceling Headphones x1
+      $299.99 each = $299.99
+
+    Subtotal: $1849.95
+    Tax (10%): $185.00
+    Total: $2034.95
+    Items: 5
+
+Step 3: Update Cart
+------------------
+    ✓ Updated Wireless Mouse quantity to 3
+
+    === SHOPPING CART ===
+    Gaming Laptop x1
+      $1299.99 each = $1299.99
+    Wireless Mouse x3
+      $49.99 each = $149.97
+    Mechanical Keyboard x1
+      $149.99 each = $149.99
+    Noise-Canceling Headphones x1
+      $299.99 each = $299.99
+
+    Subtotal: $1899.94
+    Tax (10%): $189.99
+    Total: $2089.93
+    Items: 6
+
+Step 4: Remove Item
+------------------
+    ✓ Removed Mechanical Keyboard from cart
+
+    === SHOPPING CART ===
+    Gaming Laptop x1
+      $1299.99 each = $1299.99
+    Wireless Mouse x3
+      $49.99 each = $149.97
+    Noise-Canceling Headphones x1
+      $299.99 each = $299.99
+
+    Subtotal: $1749.95
+    Tax (10%): $175.00
+    Total: $1924.95
+    Items: 5
+
+Step 5: Search Products
+----------------------
+    Search 'mouse':
+      - Wireless Mouse: $49.99
+
+Step 6: Filter by Category
+-------------------------
+    Electronics:
+      - Gaming Laptop: $1299.99
+      - 4K Monitor: $599.99
+
+Step 7: Checkout
+----------------
+    Customer: John Doe
+    Email: john@example.com
+    ✓ Order #1771407110721 confirmed!
+
+Step 8: Order Processing
+-----------------------
+
+Step 9: Store Statistics
+-----------------------
+    Total Products: 5
+    Total Orders: 1
+    Available Products: 5
+
+    === ORDERS ===
+    Order #1771407110721 - $1924.95 - confirmed
+
+9.2 Features Implemented:
+    ✓ Product management
+    ✓ Shopping cart
+    ✓ Stock management
+    ✓ Order processing
+    ✓ Search functionality
+    ✓ Category filtering
+    ✓ Customer information
+    ✓ Order status tracking
+
+9.3 Browser Version Extensions:
+    - Add HTML/CSS UI
+    - Use localStorage for cart persistence
+    - Add payment integration
+    - Add user authentication
+    - Add product reviews
+    Step 1 complete
+    Promise.all: [ 'First', 'Second', 'Third' ]
+    Step 2 complete
+    Step 3 complete
+    Callback: Data fetched!
+    Callback received: Sample data
+    .then(): Promise resolved with data!
+    Async/await data received!
+    Success: Success!
+    Finally: Always runs
+    User data: { id: 123, name: 'John Doe', email: 'john@example.com' }
+    Success!
+    ✓ Order #1771407110721 shipped!
+    ✓ Order #1771407110721 delivered!
+
+============================================================
+🎉 JAVASCRIPT ADVANCED COURSE COMPLETED!
+============================================================
+You've learned (Chapters 1-8):
+  ✓ Chapter 1: Closures & Scope
+  ✓ Chapter 2: Async JavaScript (Promises, async/await)
+  ✓ Chapter 3: ES6+ Features
+  ✓ Chapter 4: Prototypes & Classes
+  ✓ Chapter 5: Higher-Order Functions
+  ✓ Chapter 6: Error Handling
+  ✓ Chapter 7: Modules (import/export)
+  ✓ Chapter 8: JSON & LocalStorage
+  ✓ Chapter 9: Advanced Project (E-Commerce App)
+============================================================
+
+🏆 Congratulations! You've completed both Basic and Advanced JavaScript courses!
+============================================================

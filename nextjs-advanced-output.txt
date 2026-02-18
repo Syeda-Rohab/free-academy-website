@@ -1,0 +1,2208 @@
+
+============================================================
+   NEXT.JS ADVANCED COURSE - COMPLETE TRAINING
+============================================================
+
+
+============================================================
+CHAPTER 1: ROUTING ADVANCED - DYNAMIC ROUTES
+============================================================
+
+1.1 Dynamic Routes ([slug]):
+   
+   app/blog/[slug]/page.tsx:
+   
+   export default async function BlogPost({
+     params
+   }: {
+     params: { slug: string }
+   }) {
+     const post = await getPostBySlug(params.slug);
+     return <article>{post.content}</article>;
+   }
+   
+   URL: /blog/hello-world
+   URL: /blog/nextjs-tutorial
+
+1.2 Multiple Dynamic Params:
+   
+   app/shop/[category]/[product]/page.tsx:
+   
+   export default async function Product({
+     params
+   }: {
+     params: { category: string; product: string }
+   }) {
+     return (
+       <div>
+         <h1>Category: {params.category}</h1>
+         <h2>Product: {params.product}</h2>
+       </div>
+     );
+   }
+   
+   URL: /shop/electronics/iphone-15
+
+1.3 Catch-all Routes ([...slug]):
+   
+   app/docs/[...slug]/page.tsx:
+   
+   export default async function Docs({
+     params
+   }: {
+     params: { slug: string[] }
+   }) {
+     return <div>Path: {params.slug.join('/')}</div>;
+   }
+   
+   URLs:
+   /docs/getting-started
+   /docs/getting-started/installation
+   /docs/getting-started/installation/windows
+
+1.4 Optional Catch-all ([[...slug]]):
+   
+   app/docs/[[...slug]]/page.tsx:
+   
+   - /docs → params.slug = undefined
+   - /docs/intro → params.slug = ['intro']
+   - /docs/a/b → params.slug = ['a', 'b']
+
+1.5 generateStaticParams:
+   
+   app/blog/[slug]/page.tsx:
+   
+   export async function generateStaticParams() {
+     const posts = await getPosts();
+     return posts.map((post) => ({
+       slug: post.slug,
+     }));
+   }
+   
+   - Static pages generate hoti hain
+   - SEO friendly
+
+1.6 Dynamic Route with Loading:
+   
+   app/products/[id]/loading.tsx:
+   
+   export default function Loading() {
+     return <div>Loading product...</div>;
+   }
+
+1.7 Best Practices:
+   ✓ Descriptive param names use karein
+   ✓ generateStaticParams for SEO
+   ✓ Error handling for invalid params
+   ✓ Validation implement karein
+
+✓ Dynamic Routes Complete!
+
+============================================================
+CHAPTER 2: PARALLEL ROUTES (@slot)
+============================================================
+
+2.1 Parallel Routes Kya Hain?
+   - Ek se zyada pages ek saath render
+   - @folder syntax
+   - Dashboard layouts ke liye useful
+
+2.2 Basic Parallel Route:
+   
+   app/
+   ├── @team/
+   │   └── page.tsx      # Team section
+   └── @analytics/
+       └── page.tsx      # Analytics section
+
+   app/layout.tsx:
+   
+   export default function RootLayout({
+     children,
+     @team,
+     @analytics,
+   }: {
+     children: React.ReactNode;
+     @team: React.ReactNode;
+     @analytics: React.ReactNode;
+   }) {
+     return (
+       <html>
+         <body>
+           {children}
+           <div>{@team}</div>
+           <div>{@analytics}</div>
+         </body>
+       </html>
+     );
+   }
+
+2.3 Parallel Routes with Slots:
+   
+   app/dashboard/
+   ├── layout.tsx
+   ├── @sidebar/
+   │   └── page.tsx
+   └── @main/
+       └── page.tsx
+
+   app/dashboard/layout.tsx:
+   
+   export default function DashboardLayout({
+     @sidebar,
+     @main,
+   }: {
+     @sidebar: React.ReactNode;
+     @main: React.ReactNode;
+   }) {
+     return (
+       <div className="flex">
+         <aside>{@sidebar}</aside>
+         <main>{@main}</main>
+       </div>
+     );
+   }
+
+2.4 Default Parallel Routes:
+   
+   app/
+   ├── @modal/
+   │   └── default.tsx   # Default fallback
+   └── settings/
+       └── page.tsx
+
+2.5 Intercepting Routes with Parallel:
+   
+   app/
+   ├── @modal/
+   │   └── (.)photo/
+   │       └── page.tsx  # Intercept /photo
+   └── photo/
+       └── page.tsx      # Direct /photo
+
+2.6 Use Cases:
+   ✓ Dashboard with multiple sections
+   ✓ Modal systems
+   ✓ Conditional rendering
+   ✓ A/B testing layouts
+
+2.7 Best Practices:
+   ✓ Clear slot naming
+   ✓ Default fallbacks provide karein
+   ✓ Performance consider karein
+   ✓ Mobile responsiveness
+
+✓ Parallel Routes Complete!
+
+============================================================
+CHAPTER 3: INTERCEPTING ROUTES (/(..))
+============================================================
+
+3.1 Intercepting Routes Kya Hain?
+   - Route ko intercept karke modal mein dikhana
+   - URL change hota hai but modal show hota hai
+   - (.) syntax use hota hai
+
+3.2 Basic Intercepting Route:
+   
+   app/
+   ├── @modal/
+   │   └── (.)photo/
+   │       └── page.tsx    # Intercepted
+   └── photo/
+       └── page.tsx        # Direct
+
+3.3 Intercepting Levels:
+   
+   (.)  → One level up
+   (..) → Two levels up
+   (...) → Multiple levels up
+
+3.4 Photo Modal Example:
+   
+   app/@modal/(.)photo/[id]/page.tsx:
+   
+   'use client';
+   import { useRouter } from 'next/navigation';
+
+   export default function PhotoModal({
+     params
+   }: {
+     params: { id: string }
+   }) {
+     const router = useRouter();
+     
+     return (
+       <div className="fixed inset-0 bg-black/80" onClick={() => router.back()}>
+         <div className="absolute inset-0 flex items-center justify-center">
+           <img src={`/photos/${params.id}.jpg`} alt="Photo" />
+           <button onClick={() => router.back()}>Close</button>
+         </div>
+       </div>
+     );
+   }
+
+3.5 Modal with Parallel Routes:
+   
+   app/layout.tsx:
+   
+   export default function RootLayout({
+     children,
+     modal,
+   }: {
+     children: React.ReactNode;
+     modal: React.ReactNode;
+   }) {
+     return (
+       <html>
+         <body>
+           {children}
+           {modal}
+         </body>
+       </html>
+     );
+   }
+
+3.6 Intercepting vs Direct Route:
+   
+   Intercepted (/feed/photo/1):
+   - Shows modal
+   - Background: feed page
+   
+   Direct (/photo/1):
+   - Shows full page
+   - No background
+
+3.7 Use Cases:
+   ✓ Photo galleries
+   ✓ Quick view modals
+   ✓ Login/signup modals
+   ✓ Inline editing
+
+3.8 Best Practices:
+   ✓ router.back() for closing
+   ✓ Proper URL structure
+   ✓ Mobile-friendly modals
+   ✓ Accessibility consider karein
+
+✓ Intercepting Routes Complete!
+
+============================================================
+CHAPTER 4: ROUTE GROUPS & PRIVATE FOLDERS
+============================================================
+
+4.1 Route Groups (folder):
+   
+   app/
+   ├── (marketing)/
+   │   ├── layout.tsx
+   │   ├── page.tsx
+   │   └── about/
+   │       └── page.tsx
+   └── (shop)/
+       ├── layout.tsx
+       └── products/
+           └── page.tsx
+   
+   - (folder) URL mein include nahi hota
+   - Different layouts for sections
+
+4.2 Route Groups with Different Layouts:
+   
+   app/(marketing)/layout.tsx:
+   
+   export default function MarketingLayout({
+     children,
+   }: {
+     children: React.ReactNode;
+   }) {
+     return (
+       <div>
+         <MarketingNav />
+         {children}
+         <MarketingFooter />
+       </div>
+     );
+   }
+
+   app/(shop)/layout.tsx:
+   
+   export default function ShopLayout({
+     children,
+   }: {
+     children: React.ReactNode;
+   }) {
+     return (
+       <div>
+         <ShopNav />
+         {children}
+         <ShopFooter />
+       </div>
+     );
+   }
+
+4.3 Private Folders (_folder):
+   
+   app/
+   ├── _components/
+   │   ├── Header.tsx
+   │   └── Footer.tsx
+   ├── _utils/
+   │   └── helpers.ts
+   └── page.tsx
+   
+   - _folder route nahi banta
+   - Sirf code organization
+
+4.4 Combining Route Groups:
+   
+   app/
+   ├── (auth)/
+   │   ├── login/
+   │   │   └── page.tsx
+   │   └── register/
+   │       └── page.tsx
+   └── (dashboard)/
+       ├── layout.tsx
+       └── page.tsx
+
+4.5 Nested Route Groups:
+   
+   app/
+   ├── (site)/
+   │   ├── (home)/
+   │   │   └── page.tsx
+   │   └── (about)/
+   │       └── page.tsx
+   └── (admin)/
+       └── page.tsx
+
+4.6 Use Cases:
+   ✓ Marketing vs App sections
+   ✓ Different brand sections
+   ✓ A/B testing
+   ✓ Code organization
+
+4.7 Best Practices:
+   ✓ Clear naming conventions
+   ✓ Consistent group structure
+   ✓ Documentation for team
+   ✓ Avoid deep nesting
+
+✓ Route Groups & Private Folders Complete!
+
+============================================================
+CHAPTER 5: ROUTE HANDLERS (app/api/)
+============================================================
+
+5.1 Route Handlers Kya Hain?
+   - API endpoints banana
+   - app/api/ folder mein
+   - GET, POST, PUT, DELETE support
+
+5.2 Basic Route Handler:
+   
+   app/api/users/route.ts:
+   
+   import { NextResponse } from 'next/server';
+
+   export async function GET() {
+     const users = await getUsers();
+     return NextResponse.json(users);
+   }
+
+   export async function POST(request: Request) {
+     const body = await request.json();
+     const user = await createUser(body);
+     return NextResponse.json(user, { status: 201 });
+   }
+
+5.3 Dynamic Route Handlers:
+   
+   app/api/users/[id]/route.ts:
+   
+   import { NextResponse } from 'next/server';
+
+   export async function GET(
+     request: Request,
+     { params }: { params: { id: string } }
+   ) {
+     const user = await getUser(params.id);
+     if (!user) {
+       return NextResponse.json({ error: 'Not found' }, { status: 404 });
+     }
+     return NextResponse.json(user);
+   }
+
+   export async function PUT(
+     request: Request,
+     { params }: { params: { id: string } }
+   ) {
+     const body = await request.json();
+     const user = await updateUser(params.id, body);
+     return NextResponse.json(user);
+   }
+
+   export async function DELETE(
+     request: Request,
+     { params }: { params: { id: string } }
+   ) {
+     await deleteUser(params.id);
+     return NextResponse.json({ success: true });
+   }
+
+5.4 Request Methods:
+   
+   - GET: Data fetch
+   - POST: Create
+   - PUT: Update
+   - DELETE: Delete
+   - PATCH: Partial update
+   - HEAD: Headers only
+   - OPTIONS: CORS preflight
+
+5.5 NextResponse Methods:
+   
+   - NextResponse.json(data)
+   - NextResponse.json(data, { status: 201 })
+   - NextResponse.redirect(url)
+   - NextResponse.rewrite(url)
+   - NextResponse.error()
+
+5.6 Request Body Parsing:
+   
+   export async function POST(request: Request) {
+     const contentType = request.headers.get('content-type');
+     
+     if (contentType?.includes('application/json')) {
+       const body = await request.json();
+     } else if (contentType?.includes('multipart/form-data')) {
+       const formData = await request.formData();
+     } else {
+       const body = await request.text();
+     }
+     
+     return NextResponse.json({ received: true });
+   }
+
+5.7 Query Parameters:
+   
+   app/api/search/route.ts:
+   
+   export async function GET(request: Request) {
+     const { searchParams } = new URL(request.url);
+     const query = searchParams.get('q');
+     const limit = searchParams.get('limit');
+     
+     const results = await search(query, limit);
+     return NextResponse.json(results);
+   }
+
+5.8 Headers & Cookies:
+   
+   export async function GET(request: Request) {
+     const authHeader = request.headers.get('authorization');
+     const cookie = request.headers.get('cookie');
+     
+     const response = NextResponse.json({ success: true });
+     response.headers.set('X-Custom-Header', 'value');
+     response.cookies.set('session', 'abc123');
+     
+     return response;
+   }
+
+5.9 Error Handling:
+   
+   export async function GET() {
+     try {
+       const data = await fetchData();
+       return NextResponse.json(data);
+     } catch (error) {
+       return NextResponse.json(
+         { error: 'Failed to fetch' },
+         { status: 500 }
+       );
+     }
+   }
+
+5.10 Best Practices:
+   ✓ Proper HTTP status codes
+   ✓ Input validation
+   ✓ Error handling
+   ✓ Rate limiting consider karein
+   ✓ Authentication implement karein
+
+✓ Route Handlers Complete!
+
+============================================================
+CHAPTER 6: STREAMING & SUSPENSE BOUNDARIES
+============================================================
+
+6.1 Streaming Kya Hai?
+   - Content ko chunks mein bhejna
+   - Progressive rendering
+   - Better perceived performance
+
+6.2 Basic Streaming:
+   
+   app/page.tsx:
+   
+   import { Suspense } from 'react';
+
+   export default function Page() {
+     return (
+       <div>
+         <h1>Dashboard</h1>
+         <Suspense fallback={<Loading />}>
+           <SlowComponent />
+         </Suspense>
+       </div>
+     );
+   }
+
+6.3 Multiple Suspense Boundaries:
+   
+   export default function Page() {
+     return (
+       <div>
+         <Suspense fallback={<HeaderSkeleton />}>
+           <Header />
+         </Suspense>
+         
+         <Suspense fallback={<SidebarSkeleton />}>
+           <Sidebar />
+         </Suspense>
+         
+         <Suspense fallback={<MainSkeleton />}>
+           <MainContent />
+         </Suspense>
+       </div>
+     );
+   }
+
+6.4 Streaming with async Components:
+   
+   async function SlowComponent() {
+     const data = await fetchData();
+     return <div>{data}</div>;
+   }
+
+   export default function Page() {
+     return (
+       <Suspense fallback={<Loading />}>
+         <SlowComponent />
+       </Suspense>
+     );
+   }
+
+6.5 use Hook for Streaming:
+   
+   'use client';
+   import { use } from 'react';
+
+   function Content({ promise }: { promise: Promise<any> }) {
+     const data = use(promise);
+     return <div>{data.title}</div>;
+   }
+
+6.6 Streaming with Error Handling:
+   
+   import { Suspense } from 'react';
+   import ErrorBoundary from './ErrorBoundary';
+
+   export default function Page() {
+     return (
+       <ErrorBoundary fallback={<Error />}>
+         <Suspense fallback={<Loading />}>
+           <SlowComponent />
+         </Suspense>
+       </ErrorBoundary>
+     );
+   }
+
+6.7 Progressive Loading:
+   
+   export default function Page() {
+     return (
+       <>
+         <InstantHeader />
+         <Suspense fallback={<GraphSkeleton />}>
+           <SlowGraph />
+         </Suspense>
+         <Suspense fallback={<TableSkeleton />}>
+           <SlowTable />
+         </Suspense>
+       </>
+     );
+   }
+
+6.8 useOptimistic with Streaming:
+   
+   'use client';
+   import { useOptimistic, useTransition } from 'react';
+
+   export default function Feed({ initialItems }: { initialItems: Item[] }) {
+     const [optimisticItems, setOptimisticItems] = useOptimistic(
+       initialItems,
+       (state, newItem: Item) => [newItem, ...state]
+     );
+     
+     return (
+       <ul>
+         {optimisticItems.map(item => <li key={item.id}>{item.text}</li>)}
+       </ul>
+     );
+   }
+
+6.9 Best Practices:
+   ✓ Meaningful loading states
+   ✓ Strategic Suspense placement
+   ✓ Error boundaries use karein
+   ✓ Performance monitor karein
+
+✓ Streaming & Suspense Complete!
+
+============================================================
+CHAPTER 7: PARTIAL PRERENDERING
+============================================================
+
+7.1 Partial Prerendering Kya Hai?
+   - Static + Dynamic combination
+   - Shell static hota hai
+   - Content dynamic rehta hai
+
+7.2 Basic Partial Prerendering:
+   
+   app/page.tsx:
+   
+   import { Suspense } from 'react';
+
+   export default function Page() {
+     return (
+       <div>
+         <header>Static Header</header>
+         <Suspense fallback={<Loading />}>
+           <DynamicContent />
+         </Suspense>
+         <footer>Static Footer</footer>
+       </div>
+     );
+   }
+
+7.3 with generateStaticParams:
+   
+   app/blog/[slug]/page.tsx:
+   
+   export async function generateStaticParams() {
+     const posts = await getPosts();
+     return posts.map(post => ({ slug: post.slug }));
+   }
+
+   export default async function Page({ params }: { params: { slug: string } }) {
+     const post = await getPost(params.slug);
+     return <article>{post.content}</article>;
+   }
+
+7.4 Static Shell Pattern:
+   
+   app/layout.tsx:
+   
+   export default function RootLayout({ children }: { children: React.ReactNode }) {
+     return (
+       <html>
+         <head>
+           <title>My App</title>
+         </head>
+         <body>
+           <nav>Static Nav</nav>
+           {children}
+           <footer>Static Footer</footer>
+         </body>
+       </html>
+     );
+   }
+
+7.5 Caching Strategy:
+   
+   - Static parts: CDN cached
+   - Dynamic parts: Server rendered
+   - Optimal performance
+
+7.6 Best Practices:
+   ✓ Static shell design karein
+   ✓ Dynamic content isolate karein
+   ✓ Loading states optimize karein
+   ✓ Cache headers set karein
+
+✓ Partial Prerendering Complete!
+
+============================================================
+CHAPTER 8: CACHING (revalidate, fetch cache)
+============================================================
+
+8.1 Caching Types:
+   
+   - Request Memoization: Same request cache
+   - Data Cache: Persistent cache
+   - Full Route Cache: Static pages
+   - Router Cache: Client-side navigation
+
+8.2 fetch Cache Options:
+   
+   a) Cache (Default):
+      fetch(url); // Static
+
+   b) No Cache:
+      fetch(url, { cache: 'no-store' }); // Dynamic
+
+   c) Force Cache:
+      fetch(url, { forceCache: true });
+
+8.3 Time-based Revalidation:
+   
+   fetch(url, {
+     next: { revalidate: 3600 } // 1 hour
+   });
+
+8.4 Tag-based Revalidation:
+   
+   // Fetch with tags
+   fetch(url, {
+     next: { tags: ['posts', 'featured'] }
+   });
+
+   // Revalidate specific tag
+   import { revalidateTag } from 'next/cache';
+   revalidateTag('posts');
+
+8.5 Path-based Revalidation:
+   
+   import { revalidatePath } from 'next/cache';
+   
+   // After mutation
+   revalidatePath('/blog');
+   revalidatePath('/blog/[slug]', 'page');
+
+8.6 Cache in Server Actions:
+   
+   'use server';
+   import { revalidatePath } from 'next/cache';
+
+   export async function updatePost(formData: FormData) {
+     await db.post.update({ ... });
+     revalidatePath('/blog');
+   }
+
+8.7 unstable_cache:
+   
+   import { unstable_cache } from 'next/cache';
+
+   const getCachedData = unstable_cache(
+     async () => fetchData(),
+     ['data-key'],
+     { revalidate: 3600 }
+   );
+
+8.8 Cache Invalidation Patterns:
+   
+   Pattern 1: On Mutation
+   'use server';
+   export async function createPost(data: any) {
+     await db.post.create(data);
+     revalidatePath('/posts');
+     revalidateTag('posts');
+   }
+
+   Pattern 2: Time-based
+   fetch(url, { next: { revalidate: 60 } });
+
+8.9 Best Practices:
+   ✓ Appropriate cache strategy choose karein
+   ✓ Tags for related data use karein
+   ✓ Revalidation logic test karein
+   ✓ Cache size monitor karein
+
+✓ Caching Complete!
+
+============================================================
+CHAPTER 9: generateStaticParams
+============================================================
+
+9.1 generateStaticParams Kya Hai?
+   - Static pages generate karne ke liye
+   - Dynamic routes ke liye
+   - SEO friendly
+
+9.2 Basic Usage:
+   
+   app/blog/[slug]/page.tsx:
+   
+   export async function generateStaticParams() {
+     const posts = await getPosts();
+     return posts.map((post) => ({
+       slug: post.slug,
+     }));
+   }
+
+9.3 Multiple Params:
+   
+   app/shop/[category]/[product]/page.tsx:
+   
+   export async function generateStaticParams() {
+     const products = await getProducts();
+     return products.map((product) => ({
+       category: product.category,
+       product: product.slug,
+     }));
+   }
+
+9.4 With Fallback:
+   
+   export async function generateStaticParams() {
+     const posts = await getPosts();
+     return posts.slice(0, 10).map((post) => ({
+       slug: post.slug,
+     }));
+   }
+   
+   // Baaki pages on-demand render honge
+
+9.5 Dynamic Fallback:
+   
+   app/blog/[slug]/page.tsx:
+   
+   export async function generateStaticParams() {
+     return []; // All pages on-demand
+   }
+
+9.6 Performance Optimization:
+   
+   export async function generateStaticParams() {
+     const posts = await db.post.findMany({
+       select: { slug: true },
+       where: { published: true },
+     });
+     
+     return posts.map(post => ({ slug: post.slug }));
+   }
+
+9.7 Best Practices:
+   ✓ Only required params return karein
+   ✓ Database queries optimize karein
+   ✓ Pagination consider karein
+   ✓ Build time monitor karein
+
+✓ generateStaticParams Complete!
+
+============================================================
+CHAPTER 10: MIDDLEWARE (middleware.ts)
+============================================================
+
+10.1 Middleware Kya Hai?
+    - Request se pehle run hota hai
+    - Authentication
+    - Redirects
+    - Headers modify
+
+10.2 Basic Middleware:
+    
+    middleware.ts:
+    
+    import { NextResponse } from 'next/server';
+    import type { NextRequest } from 'next/server';
+
+    export function middleware(request: NextRequest) {
+      return NextResponse.next();
+    }
+
+    export const config = {
+      matcher: '/about/:path*',
+    };
+
+10.3 Authentication Middleware:
+    
+    middleware.ts:
+    
+    import { NextResponse } from 'next/server';
+    import type { NextRequest } from 'next/server';
+
+    export function middleware(request: NextRequest) {
+      const token = request.cookies.get('auth-token');
+      
+      if (!token && request.nextUrl.pathname.startsWith('/dashboard')) {
+        return NextResponse.redirect(new URL('/login', request.url));
+      }
+      
+      return NextResponse.next();
+    }
+
+    export const config = {
+      matcher: '/dashboard/:path*',
+    };
+
+10.4 Redirect Middleware:
+    
+    export function middleware(request: NextRequest) {
+      if (request.nextUrl.pathname === '/old-page') {
+        return NextResponse.redirect(new URL('/new-page', request.url));
+      }
+      return NextResponse.next();
+    }
+
+10.5 Header Modification:
+    
+    export function middleware(request: NextRequest) {
+      const response = NextResponse.next();
+      response.headers.set('X-Custom-Header', 'value');
+      response.headers.set('X-Frame-Options', 'DENY');
+      return response;
+    }
+
+10.6 Locale/Geolocation:
+    
+    export function middleware(request: NextRequest) {
+      const country = request.geo?.country || 'US';
+      const response = NextResponse.next();
+      response.cookies.set('country', country);
+      return response;
+    }
+
+10.7 Bot Protection:
+    
+    export function middleware(request: NextRequest) {
+      const userAgent = request.headers.get('user-agent');
+      
+      if (userAgent?.includes('bot')) {
+        // Bot handling
+      }
+      
+      return NextResponse.next();
+    }
+
+10.8 Rate Limiting:
+    
+    import { Ratelimit } from '@upstash/ratelimit';
+
+    const ratelimit = new Ratelimit({
+      limiter: Ratelimit.slidingWindow(10, '10 s'),
+      redis: 'redis-url',
+    });
+
+    export async function middleware(request: NextRequest) {
+      const ip = request.ip ?? '127.0.0.1';
+      const { success } = await ratelimit.limit(ip);
+      
+      if (!success) {
+        return NextResponse.json({ error: 'Too many requests' }, { status: 429 });
+      }
+      
+      return NextResponse.next();
+    }
+
+10.9 Matcher Patterns:
+    
+    export const config = {
+      matcher: [
+        '/about/:path*',      // Single param
+        '/dashboard/:path+',  // One or more
+        '/api/:path*',        // API routes
+        '/((?!api|_next).)*', // Exclude patterns
+      ],
+    };
+
+10.10 Best Practices:
+    ✓ Middleware simple rakhein
+    ✓ Performance impact consider karein
+    ✓ Edge compatible code use karein
+    ✓ Proper matcher config karein
+
+✓ Middleware Complete!
+
+============================================================
+CHAPTER 11: SERVER COMPONENTS PATTERNS
+============================================================
+
+11.1 Composition Pattern:
+    
+    // Server Component
+    import ClientComp from './ClientComp';
+
+    export default async function ServerComp() {
+      const data = await fetchData();
+      return <ClientComp data={data} />;
+    }
+
+11.2 Children Pattern:
+    
+    // Server Component
+    export default function Layout({ children }: { children: React.ReactNode }) {
+      return (
+        <div>
+          <nav>Server Nav</nav>
+          {children}
+        </div>
+      );
+    }
+
+11.3 Render Props Pattern:
+    
+    // Server Component
+    export default function DataFetcher({
+      render,
+    }: {
+      render: (data: any) => React.ReactNode;
+    }) {
+      const data = await fetchData();
+      return render(data);
+    }
+
+11.4 Wrapper Pattern:
+    
+    // Server Component wrapper
+    async function withAuth<P extends object>(
+      Component: React.ComponentType<P>
+    ) {
+      return async function AuthenticatedComponent(props: P) {
+        const user = await getCurrentUser();
+        if (!user) return <Login />;
+        return <Component {...props} />;
+      };
+    }
+
+11.5 Data Loading Pattern:
+    
+    // Parallel data loading
+    export default async function Page() {
+      const [users, posts, comments] = await Promise.all([
+        fetchUsers(),
+        fetchPosts(),
+        fetchComments(),
+      ]);
+      
+      return (
+        <div>
+          <UserList users={users} />
+          <PostList posts={posts} />
+        </div>
+      );
+    }
+
+11.6 Conditional Pattern:
+    
+    export default async function Page() {
+      const user = await getCurrentUser();
+      
+      return (
+        <div>
+          {user ? <Dashboard user={user} /> : <PublicHome />}
+        </div>
+      );
+    }
+
+11.7 Best Practices:
+    ✓ Server Components by default
+    ✓ Client Components isolate rakhein
+    ✓ Props se data pass karein
+    ✓ Composition over inheritance
+
+✓ Server Components Patterns Complete!
+
+============================================================
+CHAPTER 12: OPTIMISTIC UPDATES (useOptimistic)
+============================================================
+
+12.1 Optimistic Updates Kya Hai?
+    - UI ko immediately update karna
+    - Server response wait na karna
+    - Better UX
+
+12.2 Basic useOptimistic:
+    
+    'use client';
+    import { useOptimistic } from 'react';
+
+    export default function TodoList({ todos }: { todos: Todo[] }) {
+      const [optimisticTodos, addOptimisticTodo] = useOptimistic(
+        todos,
+        (state, newTodo: Todo) => [...state, newTodo]
+      );
+      
+      const handleSubmit = async (text: string) => {
+        const newTodo = { id: Date.now(), text };
+        addOptimisticTodo(newTodo);
+        await createTodo(text);
+      };
+      
+      return (
+        <ul>
+          {optimisticTodos.map(todo => <li key={todo.id}>{todo.text}</li>)}
+        </ul>
+      );
+    }
+
+12.3 Optimistic Delete:
+    
+    'use client';
+    import { useOptimistic } from 'react';
+
+    export default function MessageList({ messages }: { messages: Message[] }) {
+      const [optimisticMessages, removeOptimisticMessage] = useOptimistic(
+        messages,
+        (state, messageId: string) => state.filter(m => m.id !== messageId)
+      );
+      
+      const handleDelete = async (id: string) => {
+        removeOptimisticMessage(id);
+        await deleteMessage(id);
+      };
+      
+      return (
+        <div>
+          {optimisticMessages.map(msg => (
+            <div key={msg.id}>
+              {msg.text}
+              <button onClick={() => handleDelete(msg.id)}>Delete</button>
+            </div>
+          ))}
+        </div>
+      );
+    }
+
+12.4 Optimistic Update:
+    
+    'use client';
+    import { useOptimistic } from 'react';
+
+    export default function PostList({ posts }: { posts: Post[] }) {
+      const [optimisticPosts, updateOptimisticPost] = useOptimistic(
+        posts,
+        (state, updatedPost: Post) =>
+          state.map(p => p.id === updatedPost.id ? updatedPost : p)
+      );
+      
+      const handleLike = async (id: string) => {
+        const post = optimisticPosts.find(p => p.id === id);
+        const updatedPost = { ...post, likes: post.likes + 1 };
+        updateOptimisticPost(updatedPost);
+        await likePost(id);
+      };
+      
+      return (
+        <div>
+          {optimisticPosts.map(post => (
+            <div key={post.id}>
+              {post.title} - {post.likes} likes
+              <button onClick={() => handleLike(post.id)}>Like</button>
+            </div>
+          ))}
+        </div>
+      );
+    }
+
+12.5 Error Handling:
+    
+    'use client';
+    import { useOptimistic, useActionState } from 'react';
+
+    export default function CommentList({ comments }: { comments: Comment[] }) {
+      const [optimisticComments, addOptimisticComment] = useOptimistic(
+        comments,
+        (state, newComment: Comment) => [...state, newComment]
+      );
+      
+      const [error, submitComment] = useActionState(
+        async (text: string) => {
+          const newComment = { id: Date.now(), text };
+          addOptimisticComment(newComment);
+          try {
+            await createComment(text);
+          } catch {
+            // Handle error - show message
+          }
+        },
+        null
+      );
+      
+      return <div>...</div>;
+    }
+
+12.6 Best Practices:
+    ✓ Rollback logic implement karein
+    ✓ Error handling zaroori hai
+    ✓ Loading states show karein
+    ✓ User feedback dein
+
+✓ Optimistic Updates Complete!
+
+============================================================
+CHAPTER 13: AUTHENTICATION (Clerk/NextAuth)
+============================================================
+
+13.1 Clerk Authentication:
+    
+    Setup:
+    npm install @clerk/nextjs
+
+    middleware.ts:
+    
+    import { authMiddleware } from '@clerk/nextjs';
+
+    export default authMiddleware({
+      publicRoutes: ['/', '/about'],
+    });
+
+    export const config = {
+      matcher: ['/((?!.+\\.[\\w]+$|_next).*)', '/', '/(api|trpc)(.*)'],
+    };
+
+    app/layout.tsx:
+    
+    import { ClerkProvider } from '@clerk/nextjs';
+
+    export default function RootLayout({ children }: { children: React.ReactNode }) {
+      return (
+        <ClerkProvider>
+          <html>
+            <body>{children}</body>
+          </html>
+        </ClerkProvider>
+      );
+    }
+
+13.2 Clerk Sign In/Up:
+    
+    app/sign-in/[[...sign-in]]/page.tsx:
+    
+    import { SignIn } from '@clerk/nextjs';
+
+    export default function Page() {
+      return <SignIn />;
+    }
+
+    app/sign-up/[[...sign-up]]/page.tsx:
+    
+    import { SignUp } from '@clerk/nextjs';
+
+    export default function Page() {
+      return <SignUp />;
+    }
+
+13.3 Clerk User Info:
+    
+    import { currentUser } from '@clerk/nextjs';
+
+    export default async function Dashboard() {
+      const user = await currentUser();
+      
+      if (!user) return <div>Please sign in</div>;
+      
+      return (
+        <div>
+          <h1>Welcome, {user.firstName}</h1>
+          <p>{user.emailAddresses[0].emailAddress}</p>
+        </div>
+      );
+    }
+
+13.4 NextAuth (Auth.js) Setup:
+    
+    npm install next-auth
+
+    app/api/auth/[...nextauth]/route.ts:
+    
+    import NextAuth from 'next-auth';
+    import GoogleProvider from 'next-auth/providers/google';
+
+    const handler = NextAuth({
+      providers: [
+        GoogleProvider({
+          clientId: process.env.GOOGLE_CLIENT_ID!,
+          clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+        }),
+      ],
+    });
+
+    export { handler as GET, handler as POST };
+
+13.5 NextAuth Session:
+    
+    import { getServerSession } from 'next-auth';
+
+    export default async function Page() {
+      const session = await getServerSession();
+      
+      if (!session) return <div>Please sign in</div>;
+      
+      return (
+        <div>
+          <p>Signed in as {session.user?.email}</p>
+        </div>
+      );
+    }
+
+13.6 NextAuth Client:
+    
+    'use client';
+    import { useSession, signIn, signOut } from 'next-auth/react';
+
+    export default function Component() {
+      const { data: session } = useSession();
+      
+      if (session) {
+        return (
+          <button onClick={() => signOut()}>Sign Out</button>
+        );
+      }
+      
+      return <button onClick={() => signIn()}>Sign In</button>;
+    }
+
+13.7 Protected Routes:
+    
+    middleware.ts:
+    
+    import { withAuth } from 'next-auth/middleware';
+
+    export default withAuth({
+      pages: {
+        signIn: '/login',
+      },
+    });
+
+    export const config = {
+      matcher: ['/dashboard/:path*'],
+    };
+
+13.8 Best Practices:
+    ✓ Environment variables secure rakhein
+    ✓ HTTPS use karein
+    ✓ Session handling proper karein
+    ✓ Role-based access control
+
+✓ Authentication Complete!
+
+============================================================
+CHAPTER 14: DATABASE INTEGRATION
+============================================================
+
+14.1 Prisma Setup:
+    
+    npm install prisma @prisma/client
+    npx prisma init
+
+    prisma/schema.prisma:
+    
+    generator client {
+      provider = "prisma-client-js"
+    }
+
+    datasource db {
+      provider = "postgresql"
+      url      = env("DATABASE_URL")
+    }
+
+    model Post {
+      id        Int      @id @default(autoincrement())
+      title     String
+      content   String?
+      published Boolean  @default(false)
+      createdAt DateTime @default(now())
+    }
+
+14.2 Prisma Client:
+    
+    lib/prisma.ts:
+    
+    import { PrismaClient } from '@prisma/client';
+
+    const globalForPrisma = globalThis as unknown as {
+      prisma: PrismaClient | undefined;
+    };
+
+    export const prisma = globalForPrisma.prisma ?? new PrismaClient();
+
+    if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;
+
+14.3 Database Queries:
+    
+    // Create
+    const post = await prisma.post.create({
+      data: { title: 'Hello', content: 'World' },
+    });
+
+    // Read
+    const posts = await prisma.post.findMany();
+    const post = await prisma.post.findUnique({ where: { id: 1 } });
+
+    // Update
+    const updated = await prisma.post.update({
+      where: { id: 1 },
+      data: { published: true },
+    });
+
+    // Delete
+    await prisma.post.delete({ where: { id: 1 } });
+
+14.4 Server Actions with Prisma:
+    
+    'use server';
+    import { prisma } from '@/lib/prisma';
+    import { revalidatePath } from 'next/cache';
+
+    export async function createPost(formData: FormData) {
+      const title = formData.get('title') as string;
+      
+      await prisma.post.create({
+        data: { title },
+      });
+      
+      revalidatePath('/posts');
+    }
+
+14.5 MongoDB with Mongoose:
+    
+    npm install mongoose
+
+    lib/db.ts:
+    
+    import mongoose from 'mongoose';
+
+    const MONGODB_URI = process.env.MONGODB_URI!;
+
+    if (!MONGODB_URI) throw new Error('MONGODB_URI missing');
+
+    let cached = global.mongoose;
+
+    if (!cached) {
+      cached = global.mongoose = { conn: null, promise: null };
+    }
+
+    export async function dbConnect() {
+      if (cached.conn) return cached.conn;
+
+      if (!cached.promise) {
+        cached.promise = mongoose.connect(MONGODB_URI);
+      }
+
+      cached.conn = await cached.promise;
+      return cached.conn;
+    }
+
+14.6 Supabase Integration:
+    
+    npm install @supabase/supabase-js
+
+    lib/supabase.ts:
+    
+    import { createClient } from '@supabase/supabase-js';
+
+    export const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    );
+
+14.7 PlanetScale (MySQL):
+    
+    prisma/schema.prisma:
+    
+    datasource db {
+      provider = "mysql"
+      url      = env("DATABASE_URL")
+    }
+
+14.8 Best Practices:
+    ✓ Connection pooling use karein
+    ✓ Environment variables secure rakhein
+    ✓ Migrations version control karein
+    ✓ Error handling implement karein
+
+✓ Database Integration Complete!
+
+============================================================
+CHAPTER 15: TYPESCRIPT INTEGRATION
+============================================================
+
+15.1 TypeScript Config:
+    
+    tsconfig.json:
+    
+    {
+      "compilerOptions": {
+        "target": "ES2020",
+        "lib": ["dom", "dom.iterable", "esnext"],
+        "allowJs": true,
+        "skipLibCheck": true,
+        "strict": true,
+        "noEmit": true,
+        "esModuleInterop": true,
+        "module": "esnext",
+        "moduleResolution": "bundler",
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "jsx": "preserve",
+        "incremental": true,
+        "plugins": [{ "name": "next" }],
+        "paths": { "@/*": ["./*"] }
+      },
+      "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+      "exclude": ["node_modules"]
+    }
+
+15.2 Typed Page Props:
+    
+    app/blog/[slug]/page.tsx:
+    
+    export default async function Page({
+      params,
+    }: {
+      params: { slug: string };
+    }) {
+      return <div>Slug: {params.slug}</div>;
+    }
+
+15.3 Typed Search Params:
+    
+    app/search/page.tsx:
+    
+    export default async function Page({
+      searchParams,
+    }: {
+      searchParams: { [key: string]: string | string[] | undefined };
+    }) {
+      const query = searchParams.q as string;
+      return <div>Query: {query}</div>;
+    }
+
+15.4 Typed API Routes:
+    
+    app/api/users/route.ts:
+    
+    import { NextRequest, NextResponse } from 'next/server';
+
+    interface User {
+      id: number;
+      name: string;
+      email: string;
+    }
+
+    export async function GET(request: NextRequest) {
+      const users: User[] = await getUsers();
+      return NextResponse.json(users);
+    }
+
+15.5 Typed Server Actions:
+    
+    'use server';
+
+    interface FormData {
+      title: string;
+      content: string;
+    }
+
+    export async function createPost(data: FormData): Promise<{ success: boolean }> {
+      // Implementation
+      return { success: true };
+    }
+
+15.6 Generic Components:
+    
+    interface Props<T> {
+      items: T[];
+      renderItem: (item: T) => React.ReactNode;
+    }
+
+    function List<T>({ items, renderItem }: Props<T>) {
+      return <div>{items.map(renderItem)}</div>;
+    }
+
+15.7 Utility Types:
+    
+    type PostPreview = Pick<Post, 'id' | 'title' | 'excerpt'>;
+    type PostCreate = Omit<Post, 'id' | 'createdAt' | 'updatedAt'>;
+    type PostPartial = Partial<Post>;
+    type PostReadonly = Readonly<Post>;
+
+15.8 Best Practices:
+    ✓ Strict mode enable rakhein
+    ✓ Types define karein
+    ✓ any avoid karein
+    ✓ Type inference use karein
+
+✓ TypeScript Integration Complete!
+
+============================================================
+CHAPTER 16: TESTING (Jest, Testing Library)
+============================================================
+
+16.1 Jest Setup:
+    
+    npm install -D jest @testing-library/react @testing-library/jest-dom
+    npm install -D @types/jest
+
+    jest.config.js:
+    
+    module.exports = {
+      testEnvironment: 'jsdom',
+      setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
+      moduleNameMapper: {
+        '^@/(.*)$': '<rootDir>/$1',
+      },
+    };
+
+    jest.setup.js:
+    
+    import '@testing-library/jest-dom';
+
+16.2 Component Testing:
+    
+    __tests__/Button.test.tsx:
+    
+    import { render, screen, fireEvent } from '@testing-library/react';
+    import Button from '@/components/Button';
+
+    describe('Button', () => {
+      it('renders correctly', () => {
+        render(<Button>Click me</Button>);
+        expect(screen.getByText('Click me')).toBeInTheDocument();
+      });
+
+      it('handles click', () => {
+        const handleClick = jest.fn();
+        render(<Button onClick={handleClick}>Click</Button>);
+        fireEvent.click(screen.getByText('Click'));
+        expect(handleClick).toHaveBeenCalledTimes(1);
+      });
+    });
+
+16.3 Page Testing:
+    
+    __tests__/Home.test.tsx:
+    
+    import { render, screen } from '@testing-library/react';
+    import Home from '@/app/page';
+
+    describe('Home', () => {
+      it('renders heading', () => {
+        render(<Home />);
+        expect(screen.getByRole('heading')).toBeInTheDocument();
+      });
+    });
+
+16.4 API Route Testing:
+    
+    __tests__/api.test.ts:
+    
+    import { GET } from '@/app/api/users/route';
+
+    describe('API Users', () => {
+      it('returns users', async () => {
+        const response = await GET();
+        const data = await response.json();
+        expect(Array.isArray(data)).toBe(true);
+      });
+    });
+
+16.5 Mocking:
+    
+    __tests__/mock.test.tsx:
+    
+    jest.mock('@/lib/api', () => ({
+      fetchUsers: jest.fn(() => Promise.resolve([])),
+    }));
+
+16.6 Integration Testing:
+    
+    __tests__/integration.test.tsx:
+    
+    import { render, screen, waitFor } from '@testing-library/react';
+
+    it('fetches data', async () => {
+      render(<DataComponent />);
+      await waitFor(() => {
+        expect(screen.getByText('Loaded')).toBeInTheDocument();
+      });
+    });
+
+16.7 Best Practices:
+    ✓ Test coverage maintain karein
+    ✓ Mock external dependencies
+    ✓ Descriptive test names
+    ✓ CI/CD mein integrate karein
+
+✓ Testing Complete!
+
+============================================================
+CHAPTER 17: STATIC EXPORT
+============================================================
+
+17.1 Static Export Setup:
+    
+    next.config.mjs:
+    
+    const nextConfig = {
+      output: 'export',
+      distDir: 'out',
+    };
+
+    export default nextConfig;
+
+17.2 Build Command:
+    
+    npm run build
+    // Output in out/ folder
+
+17.3 Image Optimization Disable:
+    
+    next.config.mjs:
+    
+    const nextConfig = {
+      output: 'export',
+      images: {
+        unoptimized: true,
+      },
+    };
+
+17.4 Static Paths:
+    
+    - Dynamic routes ke liye generateStaticParams use karein
+    - All pages statically generate honi chahiye
+
+17.5 Deployment:
+    
+    a) GitHub Pages:
+       Push out/ folder to gh-pages branch
+
+    b) Netlify:
+       Connect repo, set build command
+       Publish directory: out
+
+    c) AWS S3:
+       aws s3 sync out/ s3://bucket
+
+17.6 Limitations:
+    ✗ Server-side rendering nahi
+    ✗ API routes nahi
+    ✗ Middleware nahi
+    ✗ Image optimization nahi
+
+17.7 Best Practices:
+    ✓ All pages static ensure karein
+    ✓ External images use karein
+    ✓ Client-side features test karein
+
+✓ Static Export Complete!
+
+============================================================
+CHAPTER 18: ENVIRONMENT VARIABLES
+============================================================
+
+18.1 .env File:
+    
+    .env.local:
+    
+    DATABASE_URL=postgresql://user:pass@localhost:5432/db
+    API_KEY=your-api-key
+    NEXT_PUBLIC_API_URL=https://api.example.com
+
+18.2 Variable Types:
+    
+    Server-side:
+    DATABASE_URL=secret  // Sirf server pe
+
+    Client-side:
+    NEXT_PUBLIC_API_URL=https://api.example.com  // Browser mein bhi
+
+18.3 Access Variables:
+    
+    Server:
+    const dbUrl = process.env.DATABASE_URL;
+
+    Client:
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
+18.4 .env Files Priority:
+    
+    1. .env.local (highest)
+    2. .env.development.local
+    3. .env.test.local
+    4. .env.production.local
+    5. .env.development
+    6. .env.test
+    7. .env.production
+    8. .env (lowest)
+
+18.5 .gitignore:
+    
+    .env.local
+    .env*.local
+
+18.6 Validation:
+    
+    lib/env.ts:
+    
+    import { z } from 'zod';
+
+    const envSchema = z.object({
+      DATABASE_URL: z.string(),
+      API_KEY: z.string(),
+      NEXT_PUBLIC_API_URL: z.string().url(),
+    });
+
+    export const env = envSchema.parse(process.env);
+
+18.7 Best Practices:
+    ✓ .env.local .gitignore mein rakhein
+    ✓ NEXT_PUBLIC_ prefix for client vars
+    ✓ Secrets commit na karein
+    ✓ Validation implement karein
+
+✓ Environment Variables Complete!
+
+============================================================
+CHAPTER 19: VERCEL DEPLOYMENT
+============================================================
+
+19.1 Vercel Setup:
+    
+    a) GitHub repo push karein
+    b) Vercel.com pe jayein
+    c) Import repository
+    d) Deploy automatically
+
+19.2 Vercel CLI:
+    
+    npm install -g vercel
+    vercel login
+    vercel
+
+19.3 Project Settings:
+    
+    - Build Command: npm run build
+    - Output Directory: .next
+    - Install Command: npm install
+
+19.4 Environment Variables on Vercel:
+    
+    Vercel Dashboard → Settings → Environment Variables
+    Add variables for Production/Preview/Development
+
+19.5 Preview Deployments:
+    
+    - Pull requests pe automatic preview
+    - Unique URL milta hai
+    - Testing ke liye perfect
+
+19.6 Custom Domain:
+    
+    Vercel Dashboard → Settings → Domains
+    Add domain and configure DNS
+
+19.7 Deployment Commands:
+    
+    vercel              // Deploy
+    vercel --prod       // Production deploy
+    vercel ls           // List deployments
+    vercel rm <id>      // Remove deployment
+
+19.8 Serverless Functions:
+    
+    app/api/ routes automatically serverless ban jate hain
+
+19.9 Analytics:
+    
+    Vercel Analytics enable karein:
+    
+    import { Analytics } from '@vercel/analytics/react';
+    <Analytics />
+
+19.10 Best Practices:
+    ✓ Environment variables set karein
+    ✓ Preview deployments use karein
+    ✓ Analytics enable rakhein
+    ✓ Custom domain configure karein
+
+✓ Vercel Deployment Complete!
+
+============================================================
+CHAPTER 20: SEO & METADATA (generateMetadata)
+============================================================
+
+20.1 generateMetadata:
+    
+    app/blog/[slug]/page.tsx:
+    
+    export async function generateMetadata({
+      params,
+    }: {
+      params: { slug: string };
+    }) {
+      const post = await getPost(params.slug);
+      
+      return {
+        title: post.title,
+        description: post.excerpt,
+        openGraph: {
+          title: post.title,
+          description: post.excerpt,
+          images: [post.image],
+        },
+      };
+    }
+
+20.2 Static Metadata:
+    
+    export const metadata = {
+      title: 'My Website',
+      description: 'Website description',
+      keywords: ['nextjs', 'react'],
+    };
+
+20.3 Dynamic Metadata:
+    
+    export async function generateMetadata({ params }: { params: { id: string } }) {
+      const product = await getProduct(params.id);
+      
+      return {
+        title: `${product.name} - My Store`,
+        description: product.description,
+      };
+    }
+
+20.4 Open Graph:
+    
+    export const metadata = {
+      openGraph: {
+        title: 'Page Title',
+        description: 'Description',
+        url: 'https://example.com',
+        siteName: 'Site Name',
+        images: [
+          {
+            url: '/og-image.jpg',
+            width: 1200,
+            height: 630,
+            alt: 'OG Image',
+          },
+        ],
+        locale: 'en_US',
+        type: 'website',
+      },
+    };
+
+20.5 Twitter Cards:
+    
+    export const metadata = {
+      twitter: {
+        card: 'summary_large_image',
+        title: 'Title',
+        description: 'Description',
+        creator: '@username',
+        images: ['/twitter-image.jpg'],
+      },
+    };
+
+20.6 Structured Data (JSON-LD):
+    
+    app/page.tsx:
+    
+    export default function Page() {
+      return (
+        <>
+          <h1>My Website</h1>
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify({
+                '@context': 'https://schema.org',
+                '@type': 'WebSite',
+                name: 'My Website',
+                url: 'https://example.com',
+              }),
+            }}
+          />
+        </>
+      );
+    }
+
+20.7 Robots.txt:
+    
+    app/robots.ts:
+    
+    export default function robots() {
+      return {
+        rules: {
+          userAgent: '*',
+          allow: '/',
+          disallow: '/private/',
+        },
+        sitemap: 'https://example.com/sitemap.xml',
+      };
+    }
+
+20.8 Sitemap:
+    
+    app/sitemap.ts:
+    
+    export default async function sitemap() {
+      const posts = await getPosts();
+      
+      return [
+        {
+          url: 'https://example.com',
+          lastModified: new Date(),
+        },
+        ...posts.map(post => ({
+          url: `https://example.com/blog/${post.slug}`,
+          lastModified: post.updatedAt,
+        })),
+      ];
+    }
+
+20.9 Best Practices:
+    ✓ Unique title/description per page
+    ✓ Open Graph for social sharing
+    ✓ Sitemap generate karein
+    ✓ Structured data add karein
+
+✓ SEO & Metadata Complete!
+
+============================================================
+CHAPTER 21: INTERNATIONALIZATION (i18n)
+============================================================
+
+21.1 i18n Setup:
+    
+    next.config.mjs:
+    
+    const nextConfig = {
+      i18n: {
+        locales: ['en', 'fr', 'es'],
+        defaultLocale: 'en',
+        localeDetection: true,
+      },
+    };
+
+21.2 Folder Structure:
+    
+    app/
+    ├── [lang]/
+    │   ├── page.tsx
+    │   ├── about/
+    │   │   └── page.tsx
+    │   └── layout.tsx
+
+21.3 Middleware for i18n:
+    
+    middleware.ts:
+    
+    import { NextResponse } from 'next/server';
+
+    const locales = ['en', 'fr', 'es'];
+
+    export function middleware(request: NextRequest) {
+      const pathname = request.nextUrl.pathname;
+      
+      const pathnameHasLocale = locales.some(
+        locale => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
+      );
+
+      if (!pathnameHasLocale) {
+        const locale = 'en';
+        request.nextUrl.pathname = `/${locale}${pathname}`;
+        return NextResponse.redirect(request.nextUrl);
+      }
+      
+      return NextResponse.next();
+    }
+
+21.4 Translations:
+    
+    lib/translations.ts:
+    
+    const translations = {
+      en: {
+        welcome: 'Welcome',
+        about: 'About Us',
+      },
+      fr: {
+        welcome: 'Bienvenue',
+        about: 'À propos',
+      },
+      es: {
+        welcome: 'Bienvenido',
+        about: 'Sobre nosotros',
+      },
+    };
+
+    export function getTranslation(locale: string, key: string) {
+      return translations[locale as keyof typeof translations]?.[key] || key;
+    }
+
+21.5 i18n Hook:
+    
+    hooks/useTranslation.ts:
+    
+    'use client';
+    import { useParams } from 'next/navigation';
+
+    export function useTranslation() {
+      const { lang } = useParams();
+      const locale = lang as string;
+      
+      const t = (key: string) => {
+        // Get translation
+        return key;
+      };
+      
+      return { locale, t };
+    }
+
+21.6 Language Switcher:
+    
+    'use client';
+    import { useRouter } from 'next/navigation';
+
+    export default function LanguageSwitcher() {
+      const router = useRouter();
+      
+      const changeLocale = (locale: string) => {
+        router.push(`/${locale}`);
+      };
+      
+      return (
+        <select onChange={(e) => changeLocale(e.target.value)}>
+          <option value="en">English</option>
+          <option value="fr">Français</option>
+          <option value="es">Español</option>
+        </select>
+      );
+    }
+
+21.7 RTL Support:
+    
+    const rtlLocales = ['ar', 'he'];
+
+    export default function RootLayout({ children, params }: { children: React.ReactNode; params: { lang: string } }) {
+      const dir = rtlLocales.includes(params.lang) ? 'rtl' : 'ltr';
+      
+      return (
+        <html lang={params.lang} dir={dir}>
+          <body>{children}</body>
+        </html>
+      );
+    }
+
+21.8 Best Practices:
+    ✓ Locale detection enable karein
+    ✓ Fallback locale set karein
+    ✓ RTL support consider karein
+    ✓ SEO for each locale
+
+✓ Internationalization Complete!
+
+============================================================
+   NEXT.JS ADVANCED COURSE - COMPLETE!
+============================================================
+
+✓ All 21 Advanced Chapters Covered!
+✓ Full Stack Next.js Developer Ready!

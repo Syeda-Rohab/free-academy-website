@@ -1,0 +1,639 @@
+============================================================
+   JAVASCRIPT BASIC COURSE - COMPLETE TRAINING
+============================================================
+
+
+============================================================
+CHAPTER 1: SETUP
+============================================================
+
+1.1 JavaScript Development Setup:
+   - Text Editor: VS Code (Recommended)
+   - Browser: Chrome/Firefox with DevTools
+   - Runtime: Node.js for server-side JS
+
+1.2 Running JavaScript:
+   a) In Browser Console (F12 → Console tab)
+   b) In HTML file with <script> tag
+   c) In Node.js with 'node filename.js'
+
+1.3 Your First JavaScript Program:
+   console.log("Hello, World!");
+   Output: Hello, World!
+
+✓ Setup Complete - Ready to code JavaScript!
+
+============================================================
+CHAPTER 2: INTRODUCTION TO JAVASCRIPT
+============================================================
+
+2.1 JavaScript Ki Definition:
+   JavaScript ek high-level, interpreted programming language hai.
+   Ye web browsers mein chalti hai aur websites ko interactive banati hai.
+
+2.2 JavaScript Kyun Zaroori Hai?
+   ─────────────────────────────
+   1. Web Development ki #1 Language
+   2. Har browser mein chalti hai
+   3. Frontend + Backend dono mein use hoti hai
+   4. Mobile apps bana sakte hain (React Native)
+   5. Desktop apps bana sakte hain (Electron)
+   6. Games bana sakte hain
+   7. AI/ML bhi ab JavaScript mein aa raha hai
+
+2.3 JavaScript Ka Role:
+   ────────────────────
+   • Websites ko dynamic banana
+   • User interactions handle karna (clicks, forms, etc.)
+   • Data fetch karna servers se (APIs)
+   • Real-time updates (chat, notifications)
+   • Animations aur effects create karna
+   • Form validation karna
+   • Browser storage manage karna
+
+2.4 JavaScript History:
+   - 1995: Brendan ne 10 din mein banayi
+   - 1997: ECMAScript standard bana
+   - 2009: Node.js ne server-side laya
+   - 2015: ES6 - Major update aaya
+   - 2026: Ab har jagah use hoti hai!
+
+✓ JavaScript is the Language of the Web!
+
+============================================================
+CHAPTER 3: VARIABLES (var/let/const)
+============================================================
+
+3.1 Variable Kya Hai?
+   Variable ek container hai jo data store karta hai.
+
+3.2 var Keyword (Old Way - Ab use na karein):
+   var oldVariable = "I am var";
+   Value: I am var
+   Problem: Function-scoped, redeclare kar sakte hain
+
+3.3 let Keyword (Modern Way):
+   let modernVariable = "I am let";
+   Value: I am let
+   After change: Changed!
+   Feature: Block-scoped, change kar sakte hain
+
+3.4 const Keyword (For Constants):
+   const constantValue = "Cannot Change";
+   Value: Cannot Change
+   Feature: Block-scoped, change NAHI kar sakte
+
+3.5 Variable Naming Rules:
+   ✓ let userName = "Alice";  (camelCase)
+   ✓ let user_age = 25;        (snake_case)
+   ✓ let $price = 100;         ($ allowed)
+   ✓ let _private = "secret";  (_ allowed)
+   ✗ let 123name = "test";    (number se start nahi)
+   ✗ let user-name = "test";  (- allowed nahi)
+
+3.6 Best Practice:
+   - let aur const use karein
+   - var avoid karein
+   - Descriptive names dein
+   - camelCase follow karein
+
+✓ Variables Complete!
+
+============================================================
+CHAPTER 4: DATA TYPES
+============================================================
+
+4.1 Primitive Data Types (7 types):
+
+   1. STRING - Text ke liye
+      let str = "Hello JavaScript";
+      Value: Hello JavaScript
+      Type: string
+
+   2. NUMBER - Numbers ke liye (integer & decimal)
+      let num = 42;
+      let float = 3.14;
+      Values: 42 and 3.14
+      Type: number
+
+   3. BOOLEAN - True/False ke liye
+      let bool = true;
+      Value: true
+      Type: boolean
+
+   4. NULL - Intentionally empty value
+      let empty = null;
+      Value: null
+      Type: object
+
+   5. UNDEFINED - Value assign nahi kiya
+      let notAssigned;
+      Value: undefined
+      Type: undefined
+
+   6. SYMBOL - Unique identifier ke liye
+      let sym = Symbol("unique");
+      Type: symbol
+
+   7. BIGINT - Very large numbers ke liye
+      let big = 9007199254740991n;
+      Type: bigint
+
+4.2 Reference Data Types:
+
+   1. ARRAY - Multiple values store karne ke liye
+      let arr = [1, 2, 3, 4, 5];
+      Value: [ 1, 2, 3, 4, 5 ]
+      Type: object
+
+   2. OBJECT - Key-value pairs store karne ke liye
+      let obj = { name: "Alice", age: 25 };
+      Value: { name: 'Alice', age: 25 }
+      Type: object
+
+   3. FUNCTION - Reusable code block
+      Type: function
+
+4.3 Type Conversion:
+   String to Number: Number("42") = 42
+   Number to String: String(42) = 42
+   To Boolean: Boolean(1) = true
+
+✓ Data Types Complete!
+
+============================================================
+CHAPTER 5: OPERATORS & EXPRESSIONS
+============================================================
+
+5.1 Arithmetic Operators:
+   Addition (+):      10 + 3 = 13
+   Subtraction (-):   10 - 3 = 7
+   Multiplication (*): 10 * 3 = 30
+   Division (/):      10 / 3 = 3.3333333333333335
+   Modulus (%):       10 % 3 = 1
+   Exponentiation (**): 10 ** 2 = 100
+   Increment (++):   x = 10 → x++ = 11
+   Decrement (--):   x = 11 → x-- = 10
+
+5.2 Assignment Operators:
+   a = 5
+   a += 3  → a = 8
+   a -= 2  → a = 6
+   a *= 2  → a = 12
+   a /= 2  → a = 6
+
+5.3 Comparison Operators:
+   Equal (==):       5 == '5' → true
+   Strict Equal (===): 5 === '5' → false
+   Not Equal (!=):   5 != '5' → false
+   Strict Not (!==): 5 !== '5' → true
+   Greater Than (>): 10 > 5  → true
+   Less Than (<):    10 < 5  → false
+   >= (Greater or Equal): true
+   <= (Less or Equal):    false
+
+5.4 Logical Operators:
+   AND (&&): true && false → false
+   OR (||):  true || false → true
+   NOT (!):  !true         → false
+
+5.5 Ternary Operator:
+   let age = 20;
+   let status = age >= 18 ? "Adult" : "Minor";
+   Result: Adult
+
+5.6 Expression Examples:
+   (10 + 5) * 2 - 3 = 27
+
+✓ Operators Complete!
+
+============================================================
+CHAPTER 6: CONTROL FLOW (if/else, switch, loops)
+============================================================
+
+6.1 if/else Statement:
+   let marks = 85;
+   Grade: B ✓ (Our marks)
+
+6.2 switch Statement:
+   let day = "Monday";
+   → Start of work week
+
+6.3 for Loop:
+   for (let i = 1; i <= 5; i++) { console.log(i); }
+   Output:
+      1
+      2
+      3
+      4
+      5
+
+6.4 while Loop:
+   let count = 1;
+   while (count <= 3) { console.log(count); count++; }
+   Output:
+      1
+      2
+      3
+
+6.5 do...while Loop:
+   let num = 1;
+   do { console.log(num); num++; } while (num <= 3);
+   Output:
+      1
+      2
+      3
+
+6.6 break and continue:
+   for (let i = 1; i <= 10; i++) {
+     if (i === 5) continue; // Skip 5
+     if (i === 8) break;    // Stop at 8
+     console.log(i);
+   }
+   Output:
+      1
+      2
+      3
+      4
+      6
+      7
+
+✓ Control Flow Complete!
+
+============================================================
+CHAPTER 7: FUNCTIONS
+============================================================
+
+7.1 Function Declaration:
+   function greet(name) {
+     return "Hello, " + name + "!";
+   }
+   greet("Alice") → Hello, Alice!
+
+7.2 Function Expression:
+   const multiply = function(a, b) {
+     return a * b;
+   };
+   multiply(5, 3) → 15
+
+7.3 Arrow Function (ES6):
+   const add = (a, b) => a + b;
+   add(10, 5) → 15
+
+7.4 Default Parameters:
+   function welcome(name = "Guest") { ... }
+   welcome() → Welcome, Guest!
+   welcome("Bob") → Welcome, Bob!
+
+7.5 Rest Parameters:
+   function sumAll(...numbers) { ... }
+   sumAll(1, 2, 3, 4, 5) → 15
+
+7.6 Callback Function:
+   processUser("Charlie", sayHello) → Hello, Charlie!
+
+7.7 Anonymous Function:
+   const anonymous = function() { ... };
+   anonymous() → I am anonymous
+
+✓ Functions Complete!
+
+============================================================
+CHAPTER 8: ARRAYS
+============================================================
+
+8.1 Array Create karna:
+   let fruits = ["Apple", "Banana", "Cherry"];
+   let numbers = [1, 2, 3, 4, 5];
+   let mixed = [1, "two", true, null];
+
+8.2 Array Access karna:
+   fruits[0] → Apple
+   fruits[1] → Banana
+   fruits.length → 3
+
+8.3 Array Methods - Add/Remove:
+   fruits.push("Date")     - Add to end
+   Result: [ 'Apple', 'Banana', 'Cherry', 'Date' ]
+   fruits.pop()            - Remove from end
+   Result: [ 'Apple', 'Banana', 'Cherry' ]
+   fruits.unshift("Apricot") - Add to beginning
+   Result: [ 'Apricot', 'Apple', 'Banana', 'Cherry' ]
+   fruits.shift()            - Remove from beginning
+   Result: [ 'Apple', 'Banana', 'Cherry' ]
+
+8.4 Array Methods - Search:
+   fruits.indexOf("Banana") → 1
+   fruits.includes("Cherry") → true
+
+8.5 Array Methods - Transform:
+   fruits.join(", ") → Apple, Banana, Cherry
+   fruits.slice(1, 3) → [ 'Banana', 'Cherry' ]
+
+8.6 Array Iteration Methods:
+
+   forEach - Har element pe execute:
+   nums.forEach(num => console.log(num));
+   Output:
+      1
+      2
+      3
+      4
+      5
+
+   map - Transform array:
+   nums.map(num => num * 2) → [ 2, 4, 6, 8, 10 ]
+
+   filter - Filter elements:
+   nums.filter(num => num % 2 === 0) → [ 2, 4 ]
+
+   find - First match dhundo:
+   nums.find(num => num > 3) → 4
+
+   reduce - Single value mein convert:
+   nums.reduce((acc, num) => acc + num, 0) → 15
+
+✓ Arrays Complete!
+
+============================================================
+CHAPTER 9: OBJECTS
+============================================================
+
+9.1 Object Create karna:
+   let person = {
+     firstName: "John",
+     lastName: "Doe",
+     age: 30,
+     isEmployed: true,
+     hobbies: ["reading", "coding", "gaming"]
+   };
+
+9.2 Object Properties Access karna:
+   Dot notation:     person.firstName → John
+   Bracket notation: person["lastName"] → Doe
+
+9.3 Object Properties Modify karna:
+   person.age = 31;
+   person.city = "New York";
+   Updated: {
+  firstName: 'John',
+  lastName: 'Doe',
+  age: 31,
+  isEmployed: true,
+  hobbies: [ 'reading', 'coding', 'gaming' ],
+  city: 'New York'
+}
+
+9.4 Object Methods:
+   let calculator = { add, subtract, multiply };
+   calculator.add(5, 3) → 8
+   calculator.subtract(10, 4) → 6
+   calculator.multiply(6, 7) → 42
+
+9.5 Object.keys, Object.values, Object.entries:
+   Object.keys(person) → [ 'firstName', 'lastName', 'age', 'isEmployed', 'hobbies', 'city' ]
+   Object.values(person) → [
+  'John',
+  'Doe',
+  31,
+  true,
+  [ 'reading', 'coding', 'gaming' ],
+  'New York'
+]
+   Object.entries(person) → [
+  [ 'firstName', 'John' ],
+  [ 'lastName', 'Doe' ],
+  [ 'age', 31 ],
+  [ 'isEmployed', true ],
+  [ 'hobbies', [ 'reading', 'coding', 'gaming' ] ],
+  [ 'city', 'New York' ]
+]
+
+9.6 Object Destructuring:
+   let { firstName, age } = person;
+   firstName → John
+   age → 31
+
+9.7 Spread Operator with Objects:
+   let updatedPerson = { ...person, email: "..." };
+   Result: {
+  firstName: 'John',
+  lastName: 'Doe',
+  age: 31,
+  isEmployed: true,
+  hobbies: [ 'reading', 'coding', 'gaming' ],
+  city: 'New York',
+  email: 'john@example.com'
+}
+
+✓ Objects Complete!
+
+============================================================
+CHAPTER 10: DOM MANIPULATION
+============================================================
+
+10.1 DOM Kya Hai?
+    DOM = Document Object Model
+    HTML document ka tree structure jo JavaScript se manipulate hota hai
+
+10.2 Elements Select karna:
+    document.getElementById('myId')
+    document.querySelector('.myClass')
+    document.querySelectorAll('div')
+    document.getElementsByTagName('p')
+
+10.3 Content Modify karna:
+    element.innerHTML = '<strong>New HTML</strong>'
+    element.textContent = 'Plain Text'
+    element.innerText = 'Visible Text'
+
+10.4 Styles Modify karna:
+    element.style.color = 'red'
+    element.style.fontSize = '24px'
+    element.style.backgroundColor = 'blue'
+
+10.5 Classes Manage karna:
+    element.classList.add('active')
+    element.classList.remove('active')
+    element.classList.toggle('active')
+    element.classList.contains('active')
+
+10.6 Elements Create/Delete karna:
+    let newDiv = document.createElement('div');
+    parent.appendChild(newDiv);
+    element.remove();
+
+10.7 Practical Example (Browser mein chalega):
+    <!-- HTML -->
+    <h1 id="title">Hello</h1>
+    <button id="btn">Click Me</button>
+
+    // JavaScript
+    const title = document.getElementById('title');
+    const btn = document.getElementById('btn');
+    title.textContent = 'Welcome!';
+    title.style.color = 'blue';
+    btn.addEventListener('click', () => {
+      alert('Button clicked!');
+    });
+
+✓ DOM Manipulation Concepts Complete!
+  (Note: DOM examples browser mein run karein)
+
+============================================================
+CHAPTER 11: EVENTS
+============================================================
+
+11.1 Events Kya Hain?
+    User actions jo JavaScript code trigger karte hain
+
+11.2 Event Listeners Lagana:
+    element.addEventListener('click', handler)
+    element.addEventListener('submit', handler)
+    element.addEventListener('keydown', handler)
+
+11.3 Common Events:
+    Mouse Events:
+    - click: User click kare
+    - dblclick: Double click kare
+    - mouseover: Mouse upar aaye
+    - mouseout: Mouse hatae
+    - mousemove: Mouse move kare
+
+    Keyboard Events:
+    - keydown: Key press kare
+    - keyup: Key release kare
+    - keypress: Key press ho rahi ho
+
+    Form Events:
+    - submit: Form submit ho
+    - change: Input value change ho
+    - input: Input mein typing ho
+    - focus: Input focus ho
+    - blur: Input blur ho
+
+    Page Events:
+    - load: Page load ho
+    - scroll: User scroll kare
+    - resize: Window resize ho
+
+11.4 Event Object:
+    element.addEventListener('click', function(event) {
+      event.target      // Clicked element
+      event.type        // Event type (click, keydown, etc.)
+      event.preventDefault()  // Default action roko
+      event.stopPropagation() // Bubbling roko
+    });
+
+11.5 Practical Example:
+    // Form Validation
+    const form = document.querySelector('form');
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();  // Page reload roko
+      const email = document.getElementById('email').value;
+      if (!email.includes('@')) {
+        alert('Invalid email!');
+      }
+    });
+
+11.6 Event Bubbling & Capturing:
+    Bubbling: Child → Parent (default)
+    Capturing: Parent → Child
+    addEventListener('click', handler, true)  // Capturing
+    addEventListener('click', handler, false) // Bubbling
+
+✓ Events Complete!
+  (Note: Event examples browser mein run karein)
+
+============================================================
+CHAPTER 12: BASIC PROJECT - TODO APP
+============================================================
+
+12.1 Todo App Structure:
+    Features:
+    - Add new todos
+    - Mark todos as complete
+    - Delete todos
+    - Filter by status
+    - View statistics
+
+12.2 Demo: Todo App Usage
+
+Step 1: Adding Todos
+--------------------
+✓ Added: "Learn JavaScript basics"
+✓ Added: "Practice DOM manipulation"
+✓ Added: "Build a project"
+✓ Added: "Learn advanced JavaScript"
+
+=== TODO LIST ===
+○ [1] Learn JavaScript basics
+○ [2] Practice DOM manipulation
+○ [3] Build a project
+○ [4] Learn advanced JavaScript
+Total: 4 items
+
+Step 2: Toggle Completion
+------------------------
+✓ Toggled: "Learn JavaScript basics" → Completed
+✓ Toggled: "Build a project" → Completed
+
+=== TODO LIST ===
+✓ [1] Learn JavaScript basics
+○ [2] Practice DOM manipulation
+✓ [3] Build a project
+○ [4] Learn advanced JavaScript
+Total: 4 items
+
+Step 3: View Statistics
+----------------------
+Statistics:
+  - Total: 4
+  - Completed: 2
+  - Active: 2
+
+Step 4: Filter Todos
+-------------------
+Active Todos:
+  - Practice DOM manipulation
+  - Learn advanced JavaScript
+
+Completed Todos:
+  ✓ Learn JavaScript basics
+  ✓ Build a project
+
+Step 5: Delete a Todo
+--------------------
+✓ Deleted: "Practice DOM manipulation"
+
+=== TODO LIST ===
+✓ [1] Learn JavaScript basics
+✓ [3] Build a project
+○ [4] Learn advanced JavaScript
+Total: 3 items
+
+
+12.3 Browser Version ke liye:
+    HTML file banayein aur DOM + Events use karein
+    Full interactive UI ban jayega!
+
+============================================================
+🎉 JAVASCRIPT BASIC COURSE COMPLETED!
+============================================================
+You've learned (Chapters 1-12):
+  ✓ Chapter 1: Setup
+  ✓ Chapter 2: Introduction to JavaScript
+  ✓ Chapter 3: Variables (var/let/const)
+  ✓ Chapter 4: Data Types
+  ✓ Chapter 5: Operators & Expressions
+  ✓ Chapter 6: Control Flow (if/else, switch, loops)
+  ✓ Chapter 7: Functions
+  ✓ Chapter 8: Arrays
+  ✓ Chapter 9: Objects
+  ✓ Chapter 10: DOM Manipulation
+  ✓ Chapter 11: Events
+  ✓ Chapter 12: Basic Project (Todo App)
+============================================================
+
+➡️  Next: Continue to JavaScript Advanced Course
+============================================================

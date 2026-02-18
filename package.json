@@ -1,0 +1,37 @@
+{
+  "name": "free-codeacademy",
+  "version": "1.0.0",
+  "description": "A complete educational platform with offline-first capabilities",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@vercel/analytics": "^1.6.1",
+    "canvas-confetti": "^1.9.4",
+    "framer-motion": "^11.18.2",
+    "idb-keyval": "^6.2.2",
+    "lucide-react": "^0.400.0",
+    "next": "^15.5.12",
+    "next-themes": "^0.3.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "zustand": "^4.5.7"
+  },
+  "devDependencies": {
+    "@types/canvas-confetti": "^1.6.4",
+    "@types/node": "^20.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@types/reflect-metadata": "^0.1.0",
+    "autoprefixer": "^10.4.24",
+    "eslint": "^8.0.0",
+    "eslint-config-next": "^15.0.0",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^3.4.19",
+    "typescript": "^5.0.0"
+  }
+}
