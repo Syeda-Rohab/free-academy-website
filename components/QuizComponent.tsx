@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useProgressStore } from '@/stores/progress';
 import { useOfflineSync } from '@/hooks/useOfflineSync';
-import { courses } from '@/lib/courses';
 import SyncStatus from './SyncStatus';
 import { CheckCircle, XCircle, ChevronLeft, ChevronRight, Send } from 'lucide-react';
 
@@ -32,9 +31,7 @@ const QuizComponent: React.FC<QuizProps> = ({ courseId, chapterId, userId, quizQ
   const { updateProgress } = useProgressStore();
   const { queueOperation, syncIfOnline } = useOfflineSync();
 
-  const course = courses.find(c => c.id === courseId);
-  const chapter = course?.chapters.find(ch => ch.id === chapterId);
-  const questions = propQuestions || chapter?.quiz.questions;
+  const questions = propQuestions;
 
   if (!questions) {
     return (
@@ -81,8 +78,8 @@ const QuizComponent: React.FC<QuizProps> = ({ courseId, chapterId, userId, quizQ
       userId,
       courseId,
       chapterId,
-      course: course?.title || courseId,
-      chapter: parseInt(chapterId.replace('ch', '')) || 0,
+      course: courseId,
+      chapter: 0,
       score,
       completed: true,
       timestamp: Date.now(),
